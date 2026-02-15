@@ -1,110 +1,67 @@
-import { 
-  LayoutDashboard, 
-  Send, 
-  History, 
-  Settings, 
-  LogOut, 
-  PlusCircle 
-} from "lucide-react"; // 아이콘 라이브러리 (npm i lucide-react)
+import { PlusCircle, Send, ArrowUp, ArrowDown } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* 1. 사이드바 (Sidebar) */}
-      <aside className="w-64 bg-gradient-to-b from-green-800 to-emerald-700 text-white flex flex-col p-6">
-        <div className="flex items-center gap-3 mb-10 px-2">
-          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-             <span className="text-green-700 font-bold text-xs">IGO</span>
-          </div>
-          <h1 className="text-xl font-bold tracking-tight">IGO BANK</h1>
+    <div className="space-y-8">
+      {/* 상단 헤더 */}
+      <header className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Hello, User님!</h2>
+          <p className="text-gray-500">오늘도 안전한 금융 생활 되세요.</p>
         </div>
+        <div className="w-12 h-12 bg-green-100 rounded-full border-2 border-green-500 flex items-center justify-center font-bold text-green-700">
+          User
+        </div>
+      </header>
 
-        <nav className="flex-grow space-y-2">
-          <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active />
-          <NavItem icon={<Send size={20} />} label="Transfer" />
-          <NavItem icon={<History size={20} />} label="Transactions" />
-          <NavItem icon={<Settings size={20} />} label="Settings" />
-        </nav>
-
-        <button className="flex items-center gap-3 px-4 py-3 opacity-70 hover:opacity-100 transition-all mt-auto border-t border-white/10 pt-6">
-          <LogOut size={20} />
-          <span className="font-medium">Sign Out</span>
-        </button>
-      </aside>
-
-      {/* 2. 메인 콘텐츠 (Main Content) */}
-      <main className="flex-grow overflow-y-auto p-8">
-        {/* 상단 헤더 */}
-        <header className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">Hello, User님!</h2>
-            <p className="text-gray-500">오늘도 안전한 금융 생활 되세요.</p>
-          </div>
-          <div className="w-12 h-12 bg-green-100 rounded-full border-2 border-green-500 flex items-center justify-center font-bold text-green-700">
-            User
-          </div>
-        </header>
-
-        {/* 대시보드 카드 섹션 */}
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          {/* 잔액 카드 (그라데이션 유지) */}
-          <div className="col-span-2 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl p-8 text-white shadow-lg shadow-green-100 relative overflow-hidden">
-            <div className="relative z-10">
-              <p className="text-white/80 text-lg mb-2 font-medium">Total Balance</p>
-              <h3 className="text-4xl font-bold mb-8">₩ 12,450,000</h3>
-              <div className="flex gap-4">
-                <button className="bg-white/20 hover:bg-white/30 backdrop-blur-md px-6 py-2 rounded-xl transition-all font-medium">
-                  Deposit
-                </button>
-                <button className="bg-white text-green-700 px-6 py-2 rounded-xl shadow-md transition-all font-medium">
-                  Transfer
-                </button>
-              </div>
-            </div>
-            {/* 배경 장식 원 */}
-            <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full" />
-          </div>
-
-          {/* 작은 요약 카드 */}
-          <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
-            <h4 className="font-bold text-gray-700">Quick Actions</h4>
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <ActionButton icon={<PlusCircle className="text-green-600" />} label="New Card" />
-              <ActionButton icon={<Send className="text-blue-600" />} label="Bill Pay" />
+      {/* 대시보드 카드 섹션 */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        {/* 잔액 카드 (그라데이션 유지) */}
+        <div className="col-span-2 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl p-8 text-white shadow-lg shadow-green-100 relative overflow-hidden">
+          <div className="relative z-10">
+            <p className="text-white/80 text-lg mb-2 font-medium">Total Balance</p>
+            <h3 className="text-4xl font-bold mb-8">₩ 12,450,000</h3>
+            <div className="flex gap-4">
+              <button className="bg-white/20 hover:bg-white/30 backdrop-blur-md px-6 py-2 rounded-xl transition-all font-medium">
+                Deposit
+              </button>
+              <button className="bg-white text-green-700 px-6 py-2 rounded-xl shadow-md transition-all font-medium">
+                Transfer
+              </button>
             </div>
           </div>
+          {/* 배경 장식 원 */}
+          <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full" />
         </div>
 
-        {/* 최근 거래 내역 섹션 */}
-        <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-gray-800">Recent Transactions</h3>
-            <button className="text-sm text-green-600 font-semibold hover:underline">View All</button>
+        {/* 작은 요약 카드 */}
+        <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
+          <h4 className="font-bold text-gray-700">Quick Actions</h4>
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            <ActionButton icon={<PlusCircle className="text-green-600" />} label="New Card" />
+            <ActionButton icon={<Send className="text-blue-600" />} label="Bill Pay" />
           </div>
-          
-          <div className="space-y-4">
-            <TransactionItem name="Apple Store" date="2026.02.15" amount="-₩ 120,000" type="expense" />
-            <TransactionItem name="Salary (IGO Tech)" date="2026.02.10" amount="+₩ 3,500,000" type="income" />
-            <TransactionItem name="Starbucks" date="2026.02.09" amount="-₩ 5,400" type="expense" />
-          </div>
-        </section>
-      </main>
+        </div>
+      </div>
+
+      {/* 최근 거래 내역 섹션 */}
+      <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-800">Recent Transactions</h3>
+          <button className="text-sm text-green-600 font-semibold hover:underline">View All</button>
+        </div>
+
+        <div className="space-y-4">
+          <TransactionItem name="Apple Store" date="2026.02.15" amount="-₩ 120,000" type="expense" />
+          <TransactionItem name="Salary (IGO Tech)" date="2026.02.10" amount="+₩ 3,500,000" type="income" />
+          <TransactionItem name="Starbucks" date="2026.02.09" amount="-₩ 5,400" type="expense" />
+        </div>
+      </section>
     </div>
   );
 }
 
 // --- 보조 컴포넌트들 ---
-
-function NavItem({ icon, label, active = false }: { icon: any, label: string, active?: boolean }) {
-  return (
-    <button className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${
-      active ? "bg-white/20 font-bold" : "hover:bg-white/10 opacity-70"
-    }`}>
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
-}
 
 function ActionButton({ icon, label }: { icon: any, label: string }) {
   return (
@@ -120,7 +77,7 @@ function TransactionItem({ name, date, amount, type }: { name: string, date: str
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-2xl transition-all border border-transparent hover:border-gray-100">
       <div className="flex items-center gap-4">
         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${type === 'income' ? 'bg-green-100' : 'bg-red-100'}`}>
-          {type === 'income' ? '↓' : '↑'}
+          {type === 'income' ? <ArrowDown size={16} className="text-green-600" /> : <ArrowUp size={16} className="text-red-600" />}
         </div>
         <div>
           <p className="font-bold text-gray-800">{name}</p>
