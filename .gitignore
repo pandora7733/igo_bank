@@ -42,6 +42,6 @@ next-env.d.ts
 
 /app/generated/prisma
 
-./igobank.db
-./igobank.db-shm
-./igobank.db-wal
+igobank.db
+igobank.db-shm
+igobank.db-wal
