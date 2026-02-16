@@ -1,16 +1,27 @@
 import { PlusCircle, Send, ArrowUp, ArrowDown } from "lucide-react";
+import { getDashboardData } from "../actions/dashboard";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const data = await getDashboardData();
+
+  if (!data) {
+    // alert("로그인 세션이 없거나 데이터를 가져오지 못하였습니다.");
+    redirect("/Auth/signin");
+  }
+
+  const { user, transactions } = data;
+
   return (
     <div className="space-y-8">
       {/* 상단 헤더 */}
       <header className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Hello, User님!</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Hello, {user.username}님!</h2>
           <p className="text-gray-500">오늘도 안전한 금융 생활 되세요.</p>
         </div>
         <div className="w-12 h-12 bg-green-100 rounded-full border-2 border-green-500 flex items-center justify-center font-bold text-green-700">
-          User
+          {user.username[0]}
         </div>
       </header>
 
@@ -19,8 +30,8 @@ export default function Dashboard() {
         {/* 잔액 카드 (그라데이션 유지) */}
         <div className="col-span-2 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl p-8 text-white shadow-lg shadow-green-100 relative overflow-hidden">
           <div className="relative z-10">
-            <p className="text-white/80 text-lg mb-2 font-medium">Total Balance</p>
-            <h3 className="text-4xl font-bold mb-8">₩ 12,450,000</h3>
+            <p className="text-white/80 text-lg mb-2 font-medium">Main Account</p>
+            <h3 className="text-4xl font-bold mb-8">₩ {user.balance.toLocaleString()}</h3>
             <div className="flex gap-4">
               <button className="bg-white/20 hover:bg-white/30 backdrop-blur-md px-6 py-2 rounded-xl transition-all font-medium">
                 Deposit
