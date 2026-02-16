@@ -1,8 +1,6 @@
 # IGO BANK
 <code>npm install</code>
 <br>
-<code>npx prisma migrate dev --name init</code>
-<br>
-<code>npx prisma generate</code>
+<code>npx tsx DB/init.ts</code>
 <br>
 <code>npm run dev</code>
