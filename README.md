@@ -1,6 +1,6 @@
 # IGO BANK
-<hr>
 ## how to start
+<br>
 <code>npm install</code>
 <br>
 <code>npx tsx DB/init.ts</code>
