@@ -1,6 +1,18 @@
+"use client"
+
 import Image from "next/image"
+import { useRouter } from "next/navigation";
+import { signin } from "@/app/actions/auth";
+import { useActionState } from "react";
 
 export default function SignIn() {
+  const [state, formAction, isPending] = useActionState(signin, null);
+
+  const router = useRouter();
+  const onClick = () => {
+    router.push("/Auth/signup");
+  }
+
   return (
     <div className="grid grid-cols-2 h-screen">
       {/* 왼쪽 구역: 로그인 테마로 문구 수정 */}
@@ -24,13 +36,14 @@ export default function SignIn() {
           <h1 className="text-4xl font-bold mb-2 text-gray-800">Sign In</h1>
           <p className="text-gray-500 mb-10">Access your IGO BANK account.</p>
 
-          <form className="space-y-8">
+          <form action={formAction} className="space-y-8">
             {/* Phone Input */}
             <div className="group">
               <label className="block text-sm font-bold text-gray-700 group-focus-within:text-green-600 transition-colors">
                 Phone
               </label>
               <input
+                name="phone"
                 type="tel" 
                 className="block w-full border-b-2 border-gray-200 py-2 text-xl focus:outline-none focus:border-green-500 transition-all placeholder:text-gray-300 text-gray-800"
                 placeholder="010-0000-0000"
@@ -43,6 +56,7 @@ export default function SignIn() {
                 Password
               </label>
               <input 
+                name="password"
                 type="password" 
                 className="block w-full border-b-2 border-gray-200 py-2 text-xl focus:outline-none focus:border-green-500 transition-all placeholder:text-gray-300 text-gray-800"
                 placeholder="••••••••"
@@ -54,18 +68,25 @@ export default function SignIn() {
                 </button>
               </div> */}
             </div>
-
+            {state?.error && (
+              <p className="text-red-500 text-sm font-medium">{state.error}</p>
+            )}
             {/* Buttons */}
             <div className="pt-6 flex flex-col gap-4">
               {/* 메인 로그인 버튼 */}
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-200 transition-all active:scale-[0.98]">
-                Sign In
+              <button 
+                type="submit" 
+                disabled={isPending}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-200 transition-all active:scale-[0.98]"
+              >
+                {isPending ? "loading" : "login"}
               </button>
 
               {/* 하단 안내 문구 및 회원가입 버튼 */}
               <div className="w-full py-2 text-center text-gray-500 font-medium">
                 Don't have an account?{' '}
                 <button 
+                  onClick={onClick}
                   type="button" 
                   className="text-green-600 underline underline-offset-4 hover:text-green-700 transition-colors font-bold ml-1"
                 >
