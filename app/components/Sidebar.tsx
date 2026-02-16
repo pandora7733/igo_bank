@@ -9,9 +9,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import LogoutModal from "./LogoutModal";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <aside className="w-64 bg-gradient-to-b from-green-800 to-emerald-700 text-white flex flex-col p-6 h-screen fixed left-0 top-0">
@@ -49,10 +52,21 @@ export default function Sidebar() {
         />
       </nav>
 
-      <button className="flex items-center gap-3 px-4 py-3 opacity-70 hover:opacity-100 transition-all mt-auto border-t border-white/10 pt-6 w-full text-left">
+      {/* sign out */}
+      <button 
+        onClick={() => setIsModalOpen(true)}
+        className="flex items-center gap-3 px-4 py-3 opacity-70 hover:opacity-100 transition-all mt-auto border-t border-white/10 pt-6 w-full text-left"
+      >
         <LogOut size={20} />
         <span className="font-medium">Sign Out</span>
       </button>
+
+
+      {/* 로그아웃 모달 */}
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </aside>
   );
 }

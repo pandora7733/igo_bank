@@ -51,7 +51,7 @@ export async function createSession(userId: number, phone: string) {
     secure: true,       // HTTPS에서만 전송
     expires: expiresAt,
     sameSite: "lax",    // CSRF 공격 방지
-    path: "/",
+    path: "/dashboard",
   });
 }
 
