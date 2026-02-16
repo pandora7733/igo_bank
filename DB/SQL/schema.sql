@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 -- 3. 거래 내역 테이블
 CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    type TEXT NOT NULL, -- 'DEPOSIT', 'WITHDRAWAL', 'TRANSFER'
+    type TEXT NOT NULL, -- 'DEPOSIT(입금)', 'WITHDRAWAL(출금)', 'TRANSFER(이체/송금)'
     amount REAL NOT NULL CHECK(amount > 0),
     sender_id INTEGER, -- 출금/이체 시 사용 (입금 시 NULL 가능)
     receiver_id INTEGER, -- 입금/이체 시 사용 (출금 시 NULL 가능)
