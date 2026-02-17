@@ -74,3 +74,45 @@ export async function depositMoney(amount:number) {
     return { error: "입금 처리 중 오류가 발생했습니다."};
   }
 }
+
+
+export async function transferMoney(targetAccountNumber: string, amount: number) {
+  const session = await getSession();
+  if (!session) return { error: "로그인이 필요합니다." };
+
+  try {
+    const result = db.transaction(() => {
+      // 1. 내 계좌 정보 및 잔액 확인
+      const myAccount = db.prepare("SELECT id, balance FROM accounts WHERE owner_id = ?").get(session.userId) as any;
+      
+      if (!myAccount) throw new Error("내 계좌를 찾을 수 없습니다.");
+      if (myAccount.balance < amount) throw new Error("잔액이 부족합니다.");
+
+      // 2. 상대방 계좌 존재 확인
+      const targetAccount = db.prepare("SELECT id FROM accounts WHERE account_number = ?").get(targetAccountNumber) as any;
+      
+      if (!targetAccount) throw new Error("존재하지 않는 계좌번호입니다.");
+      if (targetAccount.id === myAccount.id) throw new Error("본인 계좌로는 이체할 수 없습니다.");
+
+      // 3. 내 잔액 차감
+      db.prepare("UPDATE accounts SET balance = balance - ? WHERE id = ?").run(amount, myAccount.id);
+
+      // 4. 상대방 잔액 증액
+      db.prepare("UPDATE accounts SET balance = balance + ? WHERE id = ?").run(amount, targetAccount.id);
+
+      // 5. 거래 내역 기록 (TRANSFER 타입)
+      db.prepare(`
+        INSERT INTO transactions (type, amount, sender_id, receiver_id, timestamp)
+        VALUES ('TRANSFER', ?, ?, ?, DATETIME('now', 'localtime'))
+      `).run(amount, myAccount.id, targetAccount.id);
+
+      return { success: true };
+    })();
+
+    return result;
+  } catch (error: any) {
+    console.error("Transfer Error:", error);
+    // 에러 메시지를 사용자에게 친절하게 전달
+    return { error: error.message || "이체 중 오류가 발생했습니다." };
+  }
+}

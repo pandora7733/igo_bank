@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { PlusCircle, Send, ArrowUp, ArrowDown } from "lucide-react";
 import DepositModal from "./DepositModal";
 import { useRouter } from "next/navigation";
+import TransferModal from "./TransferModal";
 
 export default function DashboardClient({ user, transactions }: any) {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function DashboardClient({ user, transactions }: any) {
     router.push("/dashboard/transactions")
   }
   const [isDepositOpen, setIsDepositOpen] = useState(false);
+  const [isTransferOpen, setIsTransferOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   const getTypeName = (type: string) => {
@@ -52,7 +54,10 @@ export default function DashboardClient({ user, transactions }: any) {
               >
                 Deposit
               </button>
-              <button className="bg-white text-green-700 px-6 py-2 rounded-xl shadow-md transition-all font-medium">
+              <button 
+                onClick={() => setIsTransferOpen(true)}
+                className="bg-white text-green-700 px-6 py-2 rounded-xl shadow-md transition-all font-medium"
+              >
                 Transfer
               </button>
             </div>
@@ -99,6 +104,11 @@ export default function DashboardClient({ user, transactions }: any) {
       <DepositModal 
         isOpen={isDepositOpen} 
         onClose={() => setIsDepositOpen(false)} 
+      />
+
+      <TransferModal 
+        isOpen={isTransferOpen}
+        onClose={() => setIsTransferOpen(false)}
       />
     </div>
   );

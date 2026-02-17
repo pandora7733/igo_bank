@@ -53,7 +53,7 @@ export async function signup(prevState: any, formData: FormData) {
     return { error: "회원가입 중 서버 오류가 발생했습니다." };
   }
 
-  redirect("/Auth/signup");
+  redirect("/Auth/signin");
 }
 
 /**
