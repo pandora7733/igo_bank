@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/DB/db";
 
+// localhost:3000/api/account/[계좌번호] GET 요청
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ accountNumber: string }> }
