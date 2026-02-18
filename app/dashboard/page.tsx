@@ -1,6 +1,3 @@
-// app/dashboard/page.tsx
-// "use client" 삭제!
-
 import { getDashboardData } from "../actions/dashboard";
 import { redirect } from "next/navigation";
 import DashboardClient from "../components/DashboardClient";
