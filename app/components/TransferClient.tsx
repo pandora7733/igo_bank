@@ -124,7 +124,7 @@ export default function TransferClient({ recentAccounts }: { recentAccounts: any
           <button
             onClick={handleTransfer}
             disabled={isPending}
-            className="w-full py-5 bg-blue-600 text-white rounded-[1.5rem] font-black text-lg hover:bg-blue-700 active:scale-[0.98] transition-all shadow-lg shadow-blue-200 disabled:bg-gray-300 disabled:shadow-none"
+            className="w-full py-5 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-[1.5rem] font-black text-lg hover:bg-green-700 active:scale-[0.98] transition-all shadow-lg shadow-green-200 disabled:bg-gray-300 disabled:shadow-none"
           >
             {isPending ? (
               <span className="flex items-center justify-center gap-2">
