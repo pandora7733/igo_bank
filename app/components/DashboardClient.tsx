@@ -5,8 +5,20 @@ import { PlusCircle, Send, ArrowUp, ArrowDown } from "lucide-react";
 import DepositModal from "./DepositModal";
 import { useRouter } from "next/navigation";
 import TransferModal from "./TransferModal";
+import { Copy, Check } from "lucide-react"; // 아이콘 추가
 
 export default function DashboardClient({ user, transactions }: any) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      // 2초 후에 다시 복사 아이콘으로 변경
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      console.error("복사 실패:", err);
+    }
+  };
   const router = useRouter();
   const viewAll = () => {
     router.push("/dashboard/transactions");
@@ -48,7 +60,19 @@ export default function DashboardClient({ user, transactions }: any) {
       <div className="grid grid-cols-3 gap-6 mb-8">
         <div className="col-span-2 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl p-8 text-white shadow-lg shadow-green-100 relative overflow-hidden">
           <div className="relative z-10">
-            <p className="text-white/80 text-lg mb-2 font-medium">Main Account</p>
+            <p className="text-white/80 text-lg mb-2 font-medium">계좌번호: {user.account_number}
+            <button 
+              onClick={() => handleCopy(user.account_number)}
+              className="text-white/70 hover:text-white transition-colors ml-0.5"
+              title="계좌번호 복사"
+            >
+              {copied ? (
+                <Check size={14} className="text-emerald-300 ml-0.5" />
+              ) : (
+                <Copy size={14} />
+              )}
+            </button>
+            </p>
             <h3 className="text-4xl font-bold mb-8">₩ {user.balance.toLocaleString()}</h3>
             <div className="flex gap-4">
               <button 
