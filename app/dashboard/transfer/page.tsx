@@ -1,8 +1,13 @@
-export default function TransferPage() {
+import { getRecentTransfers } from "@/app/actions/dashboard";
+import TransferClient from "@/app/components/TransferClient";
+
+export default async function TransferPage() {
+    // app/dashboard/transfer/page.tsx 예시
+  const data = await getRecentTransfers();
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Transfer</h2>
-      <p className="text-gray-600">Transfer money between accounts here.</p>
-    </div>
+    <TransferClient 
+      recentAccounts={data?.transferLog || []} 
+    />
   );
 }

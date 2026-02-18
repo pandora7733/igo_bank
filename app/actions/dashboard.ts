@@ -116,3 +116,40 @@ export async function transferMoney(targetAccountNumber: string, amount: number)
     return { error: error.message || "이체 중 오류가 발생했습니다." };
   }
 }
+
+export async function getRecentTransfers() {
+  const session = await getSession();
+  if (!session) return null;
+
+  try {
+    // 1. 먼저 현재 로그인한 유저의 '계좌 ID'를 가져옵니다.
+    const myAccount = db.prepare(`
+      SELECT id FROM accounts WHERE owner_id = ?
+    `).get(session.userId) as { id: number };
+
+    if (!myAccount) return { transferLog: [] };
+
+    // 2. 내가 보냈던(TRANSFER) 상대방들의 정보를 중복 없이 최신순으로 가져오기
+    const transferLog = db.prepare(`
+        SELECT DISTINCT 
+            a.account_number, 
+            u.username,
+            MAX(t.timestamp) as last_transfer
+        FROM transactions t
+        JOIN accounts a ON t.receiver_id = a.id
+        JOIN users u ON a.owner_id = u.id
+        WHERE t.sender_id = ? AND t.type = 'TRANSFER'
+        GROUP BY a.account_number
+        ORDER BY last_transfer DESC
+        LIMIT 5
+    `).all(myAccount.id) as any[];
+
+    return { 
+      success: true,
+      transferLog: transferLog 
+    };
+  } catch (error) {
+    console.error("Fetch recent transfers error:", error);
+    return { success: false, transferLog: [], error: "데이터를 불러오지 못했습니다." };
+  }
+}

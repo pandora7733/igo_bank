@@ -9,7 +9,10 @@ import TransferModal from "./TransferModal";
 export default function DashboardClient({ user, transactions }: any) {
   const router = useRouter();
   const viewAll = () => {
-    router.push("/dashboard/transactions")
+    router.push("/dashboard/transactions");
+  }
+  const transfer = () => {
+    router.push("/dashboard/transfer");
   }
   const [isDepositOpen, setIsDepositOpen] = useState(false);
   const [isTransferOpen, setIsTransferOpen] = useState(false);
@@ -33,8 +36,8 @@ export default function DashboardClient({ user, transactions }: any) {
       {/* 상단 헤더 */}
       <header className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Hello, {user.username}님!</h2>
-          <p className="text-gray-500">오늘도 안전한 금융 생활 되세요.</p>
+          <h2 className="text-2xl font-bold text-gray-800">안녕하세요, {user.username}님!</h2>
+          <p className="text-gray-500">오늘도 저희 IGOBANK를 찾아주셔서 감사합니다.</p>
         </div>
         <div className="w-12 h-12 bg-green-100 rounded-full border-2 border-green-500 flex items-center justify-center font-bold text-green-700">
           {user.username[0]}
@@ -55,7 +58,7 @@ export default function DashboardClient({ user, transactions }: any) {
                 Deposit
               </button>
               <button 
-                onClick={() => setIsTransferOpen(true)}
+                onClick={transfer} //() => setIsTransferOpen(true)
                 className="bg-white text-green-700 px-6 py-2 rounded-xl shadow-md transition-all font-medium"
               >
                 Transfer
