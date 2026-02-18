@@ -45,3 +45,5 @@ next-env.d.ts
 igobank.db
 igobank.db-shm
 igobank.db-wal
+
+/dist
