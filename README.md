@@ -1,7 +1,5 @@
-# IGO BANK
-## how to start
-<code>npm install</code>
+# IGO BANK BUILD
+## how to build (make an app)
+<code>npm run build --webpack</code>
 <br>
-<code>npx tsx DB/init.ts</code>
-<br>
-<code>npm run dev</code>
+<code>npm run electron:build</code>
